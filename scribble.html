@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scribble - Explore Creativity</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: #444;
+        }
+
+        .navbar-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #ff9966;
+        }
+
+        .navbar-menu {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-menu li {
+            margin: 0 15px;
+        }
+
+        .navbar-menu a {
+            text-decoration: none;
+            color: white;
+            font-size: 1rem;
+            padding: 5px 10px;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+        }
+
+        .navbar-menu a:hover {
+            color: #ff9966;
+            border-bottom: 2px solid #ff9966;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(to right, #ff9966, #ff5e62);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .hero button {
+            background: white;
+            color: #ff5e62;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Search Bar */
+        .search-bar {
+            margin: 30px auto;
+            text-align: center;
+        }
+
+        .search-bar input {
+            width: 60%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            border-color: #ff5e62;
+            outline: none;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 50px 20px;
+            background: #f4f4f4;
+            text-align: center;
+        }
+
+        .products h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .product-card {
+            width: 250px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-info p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .product-info button {
+            background: #ff5e62;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .product-info button:hover {
+            background: #ff7f8a;
+        }
+
+        /* About Section */
+        .about {
+            padding: 40px 20px;
+            text-align: center;
+            background: #f9f9f9;
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .about p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 40px 20px;
+            background: #f4f4f4;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .contact form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .contact input, .contact textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .contact button {
+            background: #ff5e62;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact button:hover {
+            background: #ff7f8a;
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-logo">Scribble</div>
+        <ul class="navbar-menu">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero" id="hero">
+        <h1>Welcome to Scribble</h1>
+        <p>Your one-stop solution for all stationery needs.</p>
+    </section>
+
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for products...">
+    </div>
+
+    <section class="products" id="products">
+        <h2>Our Products</h2>
+        <div class="product-grid">
+            <div class="product-card" data-name="Notebook">
+                <div class="product-info">
+                    <h3>Notebook</h3>
+                    <p>High-quality notebooks for every occasion.</p>
+                    <button>Buy Now</button>
+                </div>
+            </div>
+            <div class="product-card" data-name="Pen">
+                <div class="product-info">
+                    <h3>Pen</h3>
+                    <p>Stylish pens for smooth writing.</p>
+                    <button>Buy Now</button>
+                </div>
+            </div>
+            <div class="product-card" data-name="Pen Pencil">
+                <div class="product-info">
+                    <h3>Pen Pencil</h3>
+                    <p>Perfect for both sketching and writing.</p>
+                    <button>Buy Now</button>
+                </div>
+            </div>
+            <div class="product-card" data-name="Eraser">
+                <div class="product-info">
+                    <h3>Eraser</h3>
+                    <p>Erase mistakes effortlessly.</p>
+                    <button>Buy Now</button>
+                </div>
+            </div>
+            <div class="product-card" data-name="Sharpener">
+                <div class="product-info">
+                    <h3>Sharpener</h3>
+                    <p>Efficient sharpening for all pencils.</p>
+                    <button>Buy Now</button>
+                </div>
+            </div>
+            <div class="product-card" data-name="Color Pencils">
+                <div class="product-info">
+                    <h3>Color Pencils</h3>
+                    <p>Vibrant colors for your artistic needs.</p>
+                    <button>Buy Now</button>
+                </div>
+            </div>
+            <div class="product-card" data-name="Crayons">
+                <div class="product-info">
+                    <h3>Crayons</h3>
+                    <p>Colorful crayons for kids and artists alike.</p>
+                    <button>Buy Now</button>
+                </div>
+            </div>
+            <div class="product-card" data-name="Markers">
+                <div class="product-info">
+                    <h3>Markers</h3>
+                    <p>Perfect markers for school and office.</p>
+                    <button>Buy Now</button>
+                </div>
+            </div>
+            <div class="product-card" data-name="Highlighter">
+                <div class="product-info">
+                    <h3>Highlighter</h3>
+                    <p>Highlight important details easily.</p>
+                    <button>Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <h2>About Us</h2>
+        <p>Scribble is your ultimate stationery store, providing high-quality products that fuel creativity and innovation. Whether for school, office, or personal projects, we've got you covered!</p>
+    </section>
+
+    <section class="contact" id="contact">
+        <h2>Contact Us</h2>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea rows="5" placeholder="Your Message"></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer class="footer">
+        <p>© 2024 Scribble. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const products = document.querySelectorAll('.product-card');
+
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+            products.forEach(product => {
+                const name = product.dataset.name.toLowerCase();
+                product.style.display = name.includes(query) ? 'block' : 'none';
+            });
+        });
+
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
